@@ -46,7 +46,12 @@ class Calf:
         *hosts, program = prefix.split()
         host, *hosts = hosts
 
-        day = date(*map(int, dt.split('T')[0].split('-')))
+        try:
+            day = date(*map(int, dt.split('T')[0].split('-')))
+        except ValueError:
+            log("unable to parse event timestamp", raw_timestamp=dt,
+                level='err')
+            return
 
         pid = None
         if '[' in program:

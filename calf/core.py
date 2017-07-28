@@ -41,7 +41,11 @@ class Calf:
             raise
 
     def process(self, line):
-        dt, message = line.split(' ', 1)
+        try:
+            dt, message = line.split(' ', 1)
+        except ValueError:
+            log("unable to parse line", level='err', line=line[:100])
+            return
         prefix, message = message.split(':', 1)
         *hosts, program = prefix.split()
         host, *hosts = hosts
